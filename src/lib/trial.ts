@@ -1,42 +1,31 @@
 import type { Horse, PhysicalTraits, TrialResults } from "@/types/bloodline";
 
-const RUNS = 120;
+const RUNS = 80;
 
 export function scoreOverall(traits: PhysicalTraits): number {
   return (
-    traits.strideLength * 0.11 +
-    traits.lungCapacity * 0.11 +
-    traits.heartIndex * 0.11 +
-    traits.muscleFiber * 0.1 +
-    traits.acceleration * 0.11 +
-    traits.topSpeed * 0.13 +
-    traits.stamina * 0.12 +
-    traits.recovery * 0.08 +
-    traits.consistency * 0.07 +
-    traits.durability * 0.06
+    traits.speed * 0.32 +
+    traits.stamina * 0.3 +
+    traits.consistency * 0.2 +
+    traits.durability * 0.18
   );
 }
 
 export function scoreSprint(traits: PhysicalTraits): number {
   return (
-    traits.acceleration * 0.28 +
-    traits.topSpeed * 0.28 +
-    traits.muscleFiber * 0.16 +
-    traits.strideLength * 0.16 +
-    traits.consistency * 0.07 +
-    traits.durability * 0.05
+    traits.speed * 0.58 +
+    traits.consistency * 0.22 +
+    traits.durability * 0.12 +
+    traits.stamina * 0.08
   );
 }
 
 export function scoreDistance(traits: PhysicalTraits): number {
   return (
-    traits.stamina * 0.28 +
-    traits.lungCapacity * 0.22 +
-    traits.heartIndex * 0.18 +
-    traits.recovery * 0.14 +
-    traits.strideLength * 0.08 +
-    traits.consistency * 0.06 +
-    traits.durability * 0.04
+    traits.stamina * 0.56 +
+    traits.durability * 0.2 +
+    traits.consistency * 0.16 +
+    traits.speed * 0.08
   );
 }
 
@@ -85,7 +74,7 @@ function rankBySimulation(
 }
 
 function varianceFor(traits: PhysicalTraits): number {
-  return Math.max(1.5, 9 - traits.consistency * 0.065);
+  return Math.max(1.5, 8 - traits.consistency * 0.07);
 }
 
 function deterministicNoise(seed: string): number {
@@ -110,7 +99,7 @@ function getBestFit(traits: PhysicalTraits): TrialResults["bestFit"] {
   const sprint = scoreSprint(traits);
   const distance = scoreDistance(traits);
 
-  if (Math.abs(sprint - distance) < 3) return "Balanced";
+  if (Math.abs(sprint - distance) < 4) return "Balanced";
   if (sprint > distance + 8) return "Sprinter";
   if (distance > sprint + 8) return "Router";
   return "Miler";
@@ -124,24 +113,24 @@ function buildNotes(
 ): string[] {
   const notes: string[] = [];
 
-  if (sprintRank <= Math.ceil(poolSize * 0.25)) {
-    notes.push("Sprint profile is a clear strength.");
+  if (sprintRank <= Math.ceil(poolSize * 0.33)) {
+    notes.push("Speed profile is a clear strength.");
   }
-  if (distanceRank <= Math.ceil(poolSize * 0.25)) {
-    notes.push("Distance profile should stretch well.");
+  if (distanceRank <= Math.ceil(poolSize * 0.33)) {
+    notes.push("Stamina profile should stretch well.");
   }
-  if (traits.consistency >= 70) {
-    notes.push("High consistency should reduce bad trial swings.");
+  if (traits.consistency >= 65) {
+    notes.push("Consistency should reduce bad trial swings.");
   } else if (traits.consistency <= 45) {
     notes.push("Volatile runner with a wider performance range.");
   }
-  if (traits.durability >= 70) {
-    notes.push("Durability is a long-term asset.");
+  if (traits.durability >= 65) {
+    notes.push("Durability is a breeding asset.");
   } else if (traits.durability <= 45) {
     notes.push("Durability is a weakness to breed around.");
   }
   if (notes.length === 0) {
-    notes.push("Balanced but not extreme; useful as a baseline breeder.");
+    notes.push("Balanced baseline with no extreme signal yet.");
   }
 
   return notes;

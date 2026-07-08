@@ -5,7 +5,7 @@ import type { Horse, StableState } from "@/types/bloodline";
 import { breedHorses } from "./breeding";
 import { createSeedHorses } from "./seed";
 
-const STORAGE_KEY = "project-bloodline-stable-v2";
+const STORAGE_KEY = "project-bloodline-stable-v4";
 
 export function useStable() {
   const [state, setState] = useState<StableState>({ horses: [] });

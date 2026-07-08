@@ -24,8 +24,8 @@ export function TrialPanel({ results }: { results?: TrialResults }) {
         </div>
       </div>
       <div className="rank-grid">
-        <span>Sprint #{results.sprintRank}</span>
-        <span>Distance #{results.distanceRank}</span>
+        <span>Speed #{results.sprintRank}</span>
+        <span>Stamina #{results.distanceRank}</span>
         <span>Consistency #{results.consistencyRank}</span>
         <span>{results.simulations} sims</span>
       </div>

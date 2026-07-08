@@ -1,4 +1,4 @@
-export type Allele = "A" | "B" | "C" | "D" | "E" | "F" | "G" | "H";
+export type Allele = "A" | "B" | "C";
 
 export type Sex = "Sire" | "Dam";
 
@@ -7,12 +7,7 @@ export type GeneticMarkerId =
   | "GM-002"
   | "GM-003"
   | "GM-004"
-  | "GM-005"
-  | "GM-006"
-  | "GM-007"
-  | "GM-008"
-  | "GM-009"
-  | "GM-010";
+  | "GM-005";
 
 export type GeneticMarker = {
   id: GeneticMarkerId;
@@ -22,14 +17,8 @@ export type GeneticMarker = {
 export type Genome = GeneticMarker[];
 
 export type PhysicalTraits = {
-  strideLength: number;
-  lungCapacity: number;
-  heartIndex: number;
-  muscleFiber: number;
-  acceleration: number;
-  topSpeed: number;
+  speed: number;
   stamina: number;
-  recovery: number;
   consistency: number;
   durability: number;
 };

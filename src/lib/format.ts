@@ -6,14 +6,8 @@ export function formatMarker(alleles: [string, string]): string {
 
 export function traitEntries(traits: PhysicalTraits): [string, number][] {
   return [
-    ["Stride Length", traits.strideLength],
-    ["Lung Capacity", traits.lungCapacity],
-    ["Heart Index", traits.heartIndex],
-    ["Muscle Fiber", traits.muscleFiber],
-    ["Acceleration", traits.acceleration],
-    ["Top Speed", traits.topSpeed],
+    ["Speed", traits.speed],
     ["Stamina", traits.stamina],
-    ["Recovery", traits.recovery],
     ["Consistency", traits.consistency],
     ["Durability", traits.durability],
   ];

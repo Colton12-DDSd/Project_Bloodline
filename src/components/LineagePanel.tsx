@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InheritancePanel } from "@/components/InheritancePanel";
 import type { Horse } from "@/types/bloodline";
 
 type LineagePanelProps = {
@@ -51,6 +52,15 @@ export function LineagePanel({ horse, horses }: LineagePanelProps) {
           </div>
         ) : (
           <p className="muted">No foals produced yet.</p>
+        )}
+      </div>
+
+      <div className="lineage-generation">
+        <h3>Inheritance</h3>
+        {offspring.length > 0 ? (
+          <InheritancePanel horse={horse} offspring={offspring} />
+        ) : (
+          <p className="muted">Breed this horse to unlock marker pass-down stats.</p>
         )}
       </div>
     </div>

@@ -33,11 +33,11 @@ export function HorseSummaryCard({ horse }: { horse: Horse }) {
           </span>
           <span>
             <strong>#{horse.trialResults.sprintRank}</strong>
-            Sprint
+            Speed
           </span>
           <span>
             <strong>#{horse.trialResults.distanceRank}</strong>
-            Distance
+            Stamina
           </span>
         </div>
       ) : null}
