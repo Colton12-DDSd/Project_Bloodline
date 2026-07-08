@@ -467,6 +467,91 @@ select:focus {
   color: var(--muted);
 }
 
+.lineage-panel {
+  display: grid;
+  gap: 14px;
+}
+
+.lineage-generation {
+  display: grid;
+  gap: 10px;
+}
+
+.lineage-generation h3 {
+  margin: 0;
+  color: var(--muted);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.lineage-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.lineage-card,
+.lineage-current,
+.offspring-card {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  background: rgba(8, 12, 17, 0.42);
+}
+
+.lineage-card {
+  display: grid;
+  gap: 5px;
+  min-height: 92px;
+  padding: 12px;
+}
+
+.lineage-card span,
+.offspring-pairing {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.lineage-card strong,
+.offspring-card strong {
+  color: var(--foreground);
+  font-size: 17px;
+}
+
+.lineage-card small,
+.offspring-card > span:last-child,
+.lineage-current span:last-child {
+  color: var(--muted);
+}
+
+.lineage-card.empty {
+  border-style: dashed;
+}
+
+.lineage-current {
+  display: grid;
+  justify-items: center;
+  gap: 8px;
+  padding: 14px;
+  text-align: center;
+}
+
+.lineage-current strong {
+  font-size: 20px;
+}
+
+.offspring-list {
+  display: grid;
+  gap: 8px;
+}
+
+.offspring-card {
+  display: grid;
+  gap: 5px;
+  padding: 12px;
+}
+
 .result-head {
   display: flex;
   align-items: flex-start;
@@ -542,6 +627,7 @@ select:focus {
 
   .overview-strip,
   .horse-card-details,
+  .lineage-grid,
   .stat-row {
     grid-template-columns: 1fr;
   }
