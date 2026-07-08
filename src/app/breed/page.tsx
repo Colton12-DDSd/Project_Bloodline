@@ -33,7 +33,10 @@ export default function BreedPage() {
         <div>
           <p className="eyebrow">Breeding Lab</p>
           <h1>Create a foal</h1>
-          <p>Pick one sire and one dam. The foal gets one allele from each parent at every marker.</p>
+          <p>
+            Pick one sire and one dam. The foal gets one allele from each parent
+            at every marker.
+          </p>
         </div>
       </section>
 
@@ -48,7 +51,7 @@ export default function BreedPage() {
                 <option value="">Choose sire</option>
                 {sires.map((horse) => (
                   <option key={horse.id} value={horse.id}>
-                    {horse.name} · Gen {horse.generation}
+                    {horse.name} - Gen {horse.generation}
                   </option>
                 ))}
               </select>
@@ -60,7 +63,7 @@ export default function BreedPage() {
                 <option value="">Choose dam</option>
                 {dams.map((horse) => (
                   <option key={horse.id} value={horse.id}>
-                    {horse.name} · Gen {horse.generation}
+                    {horse.name} - Gen {horse.generation}
                   </option>
                 ))}
               </select>
@@ -78,7 +81,7 @@ export default function BreedPage() {
                 <div>
                   <p className="eyebrow">Foal Result</p>
                   <h2>{foal.name}</h2>
-                  <p>{foal.sex} · Gen {foal.generation}</p>
+                  <p>{foal.sex} - Gen {foal.generation}</p>
                 </div>
                 <Link className="button secondary" href={`/horses/${foal.id}`}>
                   View detail

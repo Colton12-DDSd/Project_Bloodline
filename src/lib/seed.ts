@@ -9,26 +9,12 @@ const starterNames = [
   "Hollow Crown",
   "Sunday Voltage",
   "Copper Anthem",
-  "Glass Comet",
-  "Velvet Signal",
-  "Midnight Ledger",
-  "Pale Outrider",
-  "Red Harbor",
-  "Silver Quarry",
-  "June Circuit",
-  "North Arcade",
-  "Echo Dividend",
-  "Maple Engine",
-  "Quiet Reactor",
-  "Ashen Tempo",
-  "Bright Relay",
-  "Granite Wish",
 ];
 
 export function createSeedHorses(): Horse[] {
   const random = seededRandom(8421);
   const horses = starterNames.map((name, index) => {
-    const sex: Sex = index % 2 === 0 ? "Sire" : "Dam";
+    const sex: Sex = index < 3 ? "Sire" : "Dam";
     const genome = createRandomGenome(random);
     return {
       id: `starter-${index + 1}`,

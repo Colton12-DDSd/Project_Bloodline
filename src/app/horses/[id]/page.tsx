@@ -40,11 +40,11 @@ export default function HorseDetailPage() {
     <AppShell>
       <section className="page-head compact">
         <div>
-          <p className="eyebrow">{horse.sex} · Gen {horse.generation}</p>
+          <p className="eyebrow">{horse.sex} - Gen {horse.generation}</p>
           <h1>{horse.name}</h1>
           <p>
             {sire ? `Sire: ${sire.name}` : "Starter horse"}{" "}
-            {dam ? `· Dam: ${dam.name}` : ""}
+            {dam ? `- Dam: ${dam.name}` : ""}
           </p>
         </div>
         <Link className="button primary" href="/breed">

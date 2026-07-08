@@ -4,7 +4,7 @@ Project Bloodline is a first prototype of a web-based horse genetics and breedin
 
 ## Prototype Features
 
-- 20 seeded starter horses stored in `localStorage`
+- 6 seeded starter horses stored in `localStorage` with 3 sires and 3 dams
 - 10 genetic marker genome per horse
 - Breeding function that passes one allele from each parent per marker
 - Hidden trait engine for physical measurements
