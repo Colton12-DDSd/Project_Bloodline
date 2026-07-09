@@ -1,5 +1,5 @@
 import type { Allele, GeneticMarkerId, Horse } from "@/types/bloodline";
-import { formatMarker } from "@/lib/format";
+import { formatMarker, traitEntries } from "@/lib/format";
 
 type InheritancePanelProps = {
   horse: Horse;
@@ -12,6 +12,7 @@ type MarkerInheritance = {
   passed: Record<Allele, number>;
   unpassedAlleles: Allele[];
   passEvents: number;
+  averageTraitsByAllele: Partial<Record<Allele, Horse["traits"]>>;
   foalFlow: Array<{
     foalId: string;
     foalName: string;
@@ -100,6 +101,17 @@ export function InheritancePanel({ horse, offspring }: InheritancePanelProps) {
                     <div className="bar">
                       <span style={{ width: `${percent}%` }} />
                     </div>
+                    {marker.averageTraitsByAllele[allele] ? (
+                      <div className="allele-average-stats">
+                        {traitEntries(marker.averageTraitsByAllele[allele]).map(([label, value]) => (
+                          <span key={label}>
+                            {label} <strong>{value}</strong>
+                          </span>
+                        ))}
+                      </div>
+                    ) : (
+                      <p className="muted mini-note">No foals inherited this allele yet.</p>
+                    )}
                   </div>
                 );
               })}
@@ -129,6 +141,7 @@ export function InheritancePanel({ horse, offspring }: InheritancePanelProps) {
 function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[] {
   return horse.genome.map((marker) => {
     const passed: Partial<Record<Allele, number>> = {};
+    const inheritedFoals: Partial<Record<Allele, Horse[]>> = {};
     const foalFlow: MarkerInheritance["foalFlow"] = [];
 
     for (const foal of offspring) {
@@ -138,6 +151,7 @@ function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[]
       const passedAllele =
         foal.sireId === horse.id ? foalMarker.alleles[0] : foalMarker.alleles[1];
       passed[passedAllele] = (passed[passedAllele] ?? 0) + 1;
+      inheritedFoals[passedAllele] = [...(inheritedFoals[passedAllele] ?? []), foal];
       foalFlow.push({
         foalId: foal.id,
         foalName: foal.name,
@@ -155,6 +169,7 @@ function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[]
       passed: passed as Record<Allele, number>,
       unpassedAlleles,
       passEvents: offspring.length,
+      averageTraitsByAllele: buildAverageTraitsByAllele(marker.alleles, inheritedFoals),
       foalFlow,
     };
   });
@@ -162,4 +177,34 @@ function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[]
 
 function uniqueAlleles(alleles: [Allele, Allele]): Allele[] {
   return Array.from(new Set(alleles));
+}
+
+function buildAverageTraitsByAllele(
+  parentAlleles: [Allele, Allele],
+  inheritedFoals: Partial<Record<Allele, Horse[]>>,
+): Partial<Record<Allele, Horse["traits"]>> {
+  return Object.fromEntries(
+    uniqueAlleles(parentAlleles)
+      .map((allele) => {
+        const foals = inheritedFoals[allele] ?? [];
+        if (foals.length === 0) {
+          return [allele, undefined];
+        }
+
+        return [
+          allele,
+          {
+            speed: average(foals.map((foal) => foal.traits.speed)),
+            stamina: average(foals.map((foal) => foal.traits.stamina)),
+            consistency: average(foals.map((foal) => foal.traits.consistency)),
+            durability: average(foals.map((foal) => foal.traits.durability)),
+          },
+        ];
+      })
+      .filter((entry): entry is [Allele, Horse["traits"]] => entry[1] !== undefined),
+  );
+}
+
+function average(values: number[]): number {
+  return Math.round(values.reduce((sum, value) => sum + value, 0) / values.length);
 }

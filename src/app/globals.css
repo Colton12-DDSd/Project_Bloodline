@@ -242,9 +242,23 @@ p {
   font-size: 13px;
 }
 
+.stable-controls {
+  display: grid;
+  gap: 8px;
+  min-width: min(100%, 460px);
+}
+
+.compact-field {
+  gap: 5px;
+}
+
+.compact-field select {
+  min-height: 38px;
+}
+
 .segmented-control {
   display: inline-grid;
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 4px;
   border: 1px solid var(--line);
   border-radius: 8px;
@@ -266,6 +280,18 @@ p {
 .segmented-control button.active {
   background: rgba(114, 210, 139, 0.16);
   color: var(--accent-strong);
+}
+
+.empty-state {
+  border: 1px dashed var(--line);
+  border-radius: 8px;
+  background: rgba(18, 24, 33, 0.42);
+  padding: 18px;
+}
+
+.empty-state h2 {
+  margin-bottom: 6px;
+  font-size: 20px;
 }
 
 .horse-card,
@@ -691,6 +717,32 @@ select:focus {
   gap: 6px;
 }
 
+.allele-average-stats {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 6px;
+}
+
+.allele-average-stats span {
+  display: grid;
+  gap: 2px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 7px;
+  color: var(--muted);
+  font-size: 11px;
+}
+
+.allele-average-stats strong {
+  color: var(--foreground);
+  font-size: 13px;
+}
+
+.mini-note {
+  font-size: 12px;
+}
+
 .inheritance-gap {
   color: var(--gold);
   font-size: 13px;
@@ -824,6 +876,7 @@ select:focus {
   }
 
   .overview-strip,
+  .allele-average-stats,
   .horse-card-details,
   .inheritance-callouts,
   .inheritance-summary,
@@ -835,5 +888,9 @@ select:focus {
   .stable-toolbar {
     align-items: stretch;
     flex-direction: column;
+  }
+
+  .stable-controls {
+    min-width: 0;
   }
 }
