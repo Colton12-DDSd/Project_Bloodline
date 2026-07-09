@@ -10,9 +10,19 @@ type StableSort = "rank" | "speed" | "generation" | "name";
 type GenerationFilter = "all" | number;
 
 export default function StablePage() {
-  const { horses, sortedHorses, isReady, resetStable } = useStable();
+  const {
+    horses,
+    sortedHorses,
+    stableId,
+    syncStatus,
+    syncError,
+    isReady,
+    resetStable,
+    switchStable,
+  } = useStable();
   const [sortBy, setSortBy] = useState<StableSort>("rank");
   const [generationFilter, setGenerationFilter] = useState<GenerationFilter>("all");
+  const [stableIdDraft, setStableIdDraft] = useState("");
   const foalCount = horses.filter((horse) => horse.generation > 0).length;
   const topHorse = sortedHorses[0];
   const generations = useMemo(
@@ -58,6 +68,44 @@ export default function StablePage() {
         <p className="muted">Loading stable...</p>
       ) : (
         <>
+          <section className="stable-sync-panel" aria-label="Stable sync">
+            <div>
+              <p className="eyebrow">Shared Stable</p>
+              <h2>{stableId}</h2>
+              <p>
+                Use this same Stable ID on your phone and PC to share one horse pool.
+                Sync status: {syncStatus}.
+              </p>
+              {syncError ? <p className="error">{syncError}</p> : null}
+            </div>
+            <div className="stable-id-controls">
+              <label className="compact-field">
+                Stable ID
+                <input
+                  value={stableIdDraft || stableId}
+                  onChange={(event) => setStableIdDraft(event.target.value)}
+                  placeholder="stable-abc123"
+                />
+              </label>
+              <div className="stable-id-buttons">
+                <button
+                  className="button secondary"
+                  onClick={() => void navigator.clipboard.writeText(stableId)}
+                  type="button"
+                >
+                  Copy
+                </button>
+                <button
+                  className="button primary"
+                  onClick={() => void switchStable(stableIdDraft || stableId)}
+                  type="button"
+                >
+                  Load
+                </button>
+              </div>
+            </div>
+          </section>
+
           <section className="stable-toolbar" aria-label="Stable sorting">
             <div>
               <p className="eyebrow">Filter Stable</p>

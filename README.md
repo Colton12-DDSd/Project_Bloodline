@@ -11,6 +11,7 @@ Project Bloodline is a first prototype of a web-based horse genetics and breedin
 - Hidden trait engine for four physical measurements: Speed, Stamina, Consistency, and Durability
 - 80-run mock performance trial for each new foal
 - Stable list, horse detail page, breed page, and foal result section
+- Shared Stable ID sync through Supabase so phone and PC can load the same horse pool
 - Reset button to clear and reseed the sandbox
 
 ## Project Structure
@@ -21,10 +22,49 @@ src/components/       Reusable UI pieces
 src/lib/breeding.ts   Foal creation logic
 src/lib/genetics.ts   Marker, allele, and trait calculation logic
 src/lib/seed.ts       Starter horse generation
+src/lib/stableCloud.ts Supabase load/save for shared Stable IDs
 src/lib/trial.ts      Mock performance trial simulation
 src/lib/useStable.ts  localStorage-backed client state
 src/types/            Horse, Genome, GeneticMarker, PhysicalTraits, TrialResults
 ```
+
+## Supabase Setup
+
+Create a `.env.local` file:
+
+```bash
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY=your-publishable-key
+```
+
+Create the prototype storage table in Supabase:
+
+```sql
+create table if not exists public.stables (
+  id text primary key,
+  data jsonb not null,
+  updated_at timestamptz not null default now()
+);
+
+alter table public.stables enable row level security;
+
+grant select, insert, update on public.stables to anon, authenticated;
+
+create policy "prototype stable read"
+on public.stables for select
+using (true);
+
+create policy "prototype stable insert"
+on public.stables for insert
+with check (true);
+
+create policy "prototype stable update"
+on public.stables for update
+using (true)
+with check (true);
+```
+
+This is intentionally open for solo prototype testing. Anyone with a Stable ID can read or update that stable.
 
 ## Run Locally
 
