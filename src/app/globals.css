@@ -222,6 +222,52 @@ p {
   gap: 12px;
 }
 
+.stable-toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 14px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(18, 24, 33, 0.72);
+  padding: 12px;
+}
+
+.stable-toolbar .eyebrow {
+  margin-bottom: 4px;
+}
+
+.stable-toolbar p:not(.eyebrow) {
+  font-size: 13px;
+}
+
+.segmented-control {
+  display: inline-grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: rgba(8, 12, 17, 0.52);
+  padding: 4px;
+}
+
+.segmented-control button {
+  min-height: 36px;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  color: var(--muted);
+  cursor: pointer;
+  font-weight: 800;
+  padding: 0 10px;
+}
+
+.segmented-control button.active {
+  background: rgba(114, 210, 139, 0.16);
+  color: var(--accent-strong);
+}
+
 .horse-card,
 .breed-panel,
 .section {
@@ -655,6 +701,55 @@ select:focus {
   font-size: 13px;
 }
 
+.gene-flow-map {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(135px, 1fr));
+  gap: 7px;
+}
+
+.gene-flow-chip {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 7px;
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.gene-flow-chip > span:last-child {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.allele-token {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex: 0 0 auto;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  color: #071008;
+  font-weight: 900;
+}
+
+.allele-a {
+  background: var(--accent);
+}
+
+.allele-b {
+  background: var(--blue);
+}
+
+.allele-c {
+  background: var(--gold);
+}
+
 .result-head {
   display: flex;
   align-items: flex-start;
@@ -735,5 +830,10 @@ select:focus {
   .lineage-grid,
   .stat-row {
     grid-template-columns: 1fr;
+  }
+
+  .stable-toolbar {
+    align-items: stretch;
+    flex-direction: column;
   }
 }

@@ -12,6 +12,11 @@ type MarkerInheritance = {
   passed: Record<Allele, number>;
   unpassedAlleles: Allele[];
   passEvents: number;
+  foalFlow: Array<{
+    foalId: string;
+    foalName: string;
+    allele: Allele;
+  }>;
 };
 
 export function InheritancePanel({ horse, offspring }: InheritancePanelProps) {
@@ -104,6 +109,16 @@ export function InheritancePanel({ horse, offspring }: InheritancePanelProps) {
                 ? `Not yet seen in foals: ${marker.unpassedAlleles.join(", ")}`
                 : "All visible alleles have appeared in offspring."}
             </p>
+            <div className="gene-flow-map" aria-label={`${marker.markerId} foal allele flow`}>
+              {marker.foalFlow.map((flow) => (
+                <div className="gene-flow-chip" key={`${marker.markerId}-${flow.foalId}`}>
+                  <span className={`allele-token allele-${flow.allele.toLowerCase()}`}>
+                    {flow.allele}
+                  </span>
+                  <span>{flow.foalName}</span>
+                </div>
+              ))}
+            </div>
           </div>
         ))}
       </div>
@@ -114,6 +129,7 @@ export function InheritancePanel({ horse, offspring }: InheritancePanelProps) {
 function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[] {
   return horse.genome.map((marker) => {
     const passed: Partial<Record<Allele, number>> = {};
+    const foalFlow: MarkerInheritance["foalFlow"] = [];
 
     for (const foal of offspring) {
       const foalMarker = foal.genome.find((entry) => entry.id === marker.id);
@@ -122,6 +138,11 @@ function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[]
       const passedAllele =
         foal.sireId === horse.id ? foalMarker.alleles[0] : foalMarker.alleles[1];
       passed[passedAllele] = (passed[passedAllele] ?? 0) + 1;
+      foalFlow.push({
+        foalId: foal.id,
+        foalName: foal.name,
+        allele: passedAllele,
+      });
     }
 
     const unpassedAlleles = uniqueAlleles(marker.alleles).filter(
@@ -134,6 +155,7 @@ function buildMarkerStats(horse: Horse, offspring: Horse[]): MarkerInheritance[]
       passed: passed as Record<Allele, number>,
       unpassedAlleles,
       passEvents: offspring.length,
+      foalFlow,
     };
   });
 }
