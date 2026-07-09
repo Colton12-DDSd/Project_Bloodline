@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Allele, GeneticMarkerId, Horse } from "@/types/bloodline";
 import { formatMarker, traitEntries } from "@/lib/format";
 
@@ -123,12 +124,16 @@ export function InheritancePanel({ horse, offspring }: InheritancePanelProps) {
             </p>
             <div className="gene-flow-map" aria-label={`${marker.markerId} foal allele flow`}>
               {marker.foalFlow.map((flow) => (
-                <div className="gene-flow-chip" key={`${marker.markerId}-${flow.foalId}`}>
+                <Link
+                  className="gene-flow-chip"
+                  href={`/horses/${flow.foalId}`}
+                  key={`${marker.markerId}-${flow.foalId}`}
+                >
                   <span className={`allele-token allele-${flow.allele.toLowerCase()}`}>
                     {flow.allele}
                   </span>
                   <span>{flow.foalName}</span>
-                </div>
+                </Link>
               ))}
             </div>
           </div>

@@ -770,6 +770,18 @@ select:focus {
   padding: 7px;
   color: var(--muted);
   font-size: 12px;
+  transition:
+    border-color 150ms ease,
+    background 150ms ease,
+    color 150ms ease;
+}
+
+.gene-flow-chip:hover,
+.gene-flow-chip:focus-visible {
+  border-color: rgba(114, 210, 139, 0.45);
+  background: rgba(114, 210, 139, 0.08);
+  color: var(--foreground);
+  outline: none;
 }
 
 .gene-flow-chip > span:last-child {
