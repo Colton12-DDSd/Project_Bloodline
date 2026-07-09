@@ -11,6 +11,7 @@ export function AppShell({ children }: { children: ReactNode }) {
         <nav>
           <Link href="/">Stable</Link>
           <Link href="/breed">Breed</Link>
+          <Link href="/genes">Genes</Link>
         </nav>
       </header>
       <main>{children}</main>

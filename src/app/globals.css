@@ -456,6 +456,23 @@ p {
   margin-bottom: 12px;
 }
 
+.section-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 12px;
+}
+
+.section-head h2 {
+  margin-bottom: 0;
+}
+
+.section-head > p {
+  max-width: 360px;
+  font-size: 13px;
+}
+
 .breed-panel {
   display: grid;
   gap: 12px;
@@ -835,6 +852,113 @@ input:focus {
   white-space: nowrap;
 }
 
+.gene-signal-grid,
+.genotype-grid,
+.pairing-columns {
+  display: grid;
+  gap: 10px;
+}
+
+.gene-signal-grid {
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+}
+
+.genotype-grid {
+  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+}
+
+.pairing-columns {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.gene-card,
+.genotype-card,
+.pairing-card,
+.pairing-column {
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 8px;
+  background: rgba(8, 12, 17, 0.42);
+}
+
+.gene-card,
+.genotype-card,
+.pairing-card {
+  display: grid;
+  gap: 10px;
+  padding: 12px;
+}
+
+.gene-card p,
+.genotype-card p {
+  font-size: 13px;
+}
+
+.gene-card p strong {
+  color: var(--foreground);
+}
+
+.gene-card-head,
+.gene-card-head > div,
+.pairing-names {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.gene-card-head {
+  justify-content: space-between;
+}
+
+.gene-card-head > span,
+.genotype-card span,
+.pairing-names span {
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 800;
+}
+
+.genotype-card > div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
+.genotype-card strong {
+  color: var(--accent-strong);
+  font-size: 18px;
+}
+
+.pairing-column {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 10px;
+}
+
+.pairing-column h3 {
+  margin: 0;
+  color: var(--accent-strong);
+}
+
+.pairing-names {
+  flex-wrap: wrap;
+  font-weight: 900;
+}
+
+.pairing-names a {
+  color: var(--foreground);
+}
+
+.pairing-names a:hover {
+  color: var(--accent-strong);
+}
+
+.compact-notes {
+  gap: 4px;
+  font-size: 12px;
+}
+
 .allele-token {
   display: inline-flex;
   align-items: center;
@@ -923,7 +1047,8 @@ input:focus {
   }
 
   .page-head,
-  .result-head {
+  .result-head,
+  .section-head {
     flex-direction: column;
   }
 
@@ -938,6 +1063,7 @@ input:focus {
   .inheritance-callouts,
   .inheritance-summary,
   .lineage-grid,
+  .pairing-columns,
   .stat-row {
     grid-template-columns: 1fr;
   }
