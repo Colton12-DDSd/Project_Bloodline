@@ -11,6 +11,10 @@ const TABLE_NAME = "stables";
 
 export async function loadCloudStable(stableId: string): Promise<StableState | undefined> {
   const supabase = createClient();
+  if (!supabase) {
+    throw new Error("Supabase sync is not configured for this deployment.");
+  }
+
   const { data, error } = await supabase
     .from(TABLE_NAME)
     .select("id,data,updated_at")
@@ -26,6 +30,10 @@ export async function loadCloudStable(stableId: string): Promise<StableState | u
 
 export async function saveCloudStable(stableId: string, state: StableState) {
   const supabase = createClient();
+  if (!supabase) {
+    throw new Error("Supabase sync is not configured for this deployment.");
+  }
+
   const { error } = await supabase.from(TABLE_NAME).upsert({
     id: stableId,
     data: state,
