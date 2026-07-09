@@ -79,15 +79,15 @@ export function useStable() {
 
     try {
       const cloudStable = await loadCloudStable(id);
-      if (cloudStable) {
+      if (hasHorses(cloudStable)) {
         setState(cloudStable);
         writeLocalStable(id, cloudStable);
         setSyncStatus("synced");
       } else {
-        const seedStable = localStable ?? { horses: createSeedHorses() };
-        setState(seedStable);
-        writeLocalStable(id, seedStable);
-        await saveCloudStable(id, seedStable);
+        const repairedStable = hasHorses(localStable) ? localStable : { horses: createSeedHorses() };
+        setState(repairedStable);
+        writeLocalStable(id, repairedStable);
+        await saveCloudStable(id, repairedStable);
         setSyncStatus("synced");
       }
     } catch (error) {
@@ -174,4 +174,8 @@ function readLocalStable(stableId: string): StableState | undefined {
 
 function writeLocalStable(stableId: string, state: StableState) {
   window.localStorage.setItem(storageKey(stableId), JSON.stringify(state));
+}
+
+function hasHorses(state: StableState | undefined): state is StableState {
+  return Boolean(state?.horses.length);
 }
