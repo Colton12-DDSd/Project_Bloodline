@@ -860,15 +860,15 @@ input:focus {
 }
 
 .gene-signal-grid {
-  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
 }
 
 .genotype-grid {
-  grid-template-columns: repeat(auto-fit, minmax(185px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
 }
 
 .pairing-columns {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
 }
 
 .gene-card,
@@ -907,6 +907,7 @@ input:focus {
 
 .gene-card-head {
   justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .gene-card-head > span,
@@ -944,10 +945,12 @@ input:focus {
 .pairing-names {
   flex-wrap: wrap;
   font-weight: 900;
+  line-height: 1.35;
 }
 
 .pairing-names a {
   color: var(--foreground);
+  overflow-wrap: anywhere;
 }
 
 .pairing-names a:hover {
@@ -957,6 +960,12 @@ input:focus {
 .compact-notes {
   gap: 4px;
   font-size: 12px;
+}
+
+.gene-card .allele-average-stats,
+.genotype-card .allele-average-stats,
+.pairing-card .allele-average-stats {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
 }
 
 .allele-token {
@@ -1079,5 +1088,31 @@ input:focus {
 
   .stable-controls {
     min-width: 0;
+  }
+}
+
+@media (max-width: 680px) {
+  .gene-signal-grid,
+  .genotype-grid,
+  .pairing-columns,
+  .gene-card .allele-average-stats,
+  .genotype-card .allele-average-stats,
+  .pairing-card .allele-average-stats {
+    grid-template-columns: 1fr;
+  }
+
+  .gene-card,
+  .genotype-card,
+  .pairing-card {
+    min-width: 0;
+  }
+
+  .gene-flow-chip {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
+  .gene-flow-chip > span:last-child {
+    white-space: normal;
   }
 }
